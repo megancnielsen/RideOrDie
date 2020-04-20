@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body style="background:transparent url('https://ep1.pinkbike.org/p5pb14526424/p5pb14526424.jpg') no-repeat center center /cover; padding-bottom: 40px;">
+    <div class="page container mt-lg font-weight-lighter">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/dashboard">Home | <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#!">Trails | </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#!">Rider Match-Up</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="">
+
+            <div>
+                {% if messages %}
+                <div class="mt-5">
+                    {% for message in messages %}
+                    <p {% if message.tags %} class="{{ messages.tags }}" {% endif %}>{{message}}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="row mr-3 mt-2 d-sm-flex flex-column">
+                <div class="mt-2">
+                    <div class="text-white row m-3">                
+                        <h1 class="font-weight-light">Image Gallery</h1>
+                    </div>
+                </div>
+
+                <div class="row m-3">
+                    
+                    <div class="row text-white m-3">                
+                        <form action="/upload_pic" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <p>
+                                <input id="img" type="file" class="img-fluid" alt="Responsive image" name="file" accept="image/*">
+                            </p>
+                                <div class="col form-group">                    
+                                    <label for="formGroupExampleInput">Photo Title</label>
+                                    <input type="text" class="form-control" name="pic_title_input" placeholder=" "> 
+                                </div>
+                                <div class="col form-group">
+                                    <label for="formGroupExampleInput">Photo description</label>
+                                    <input type="text" class="form-control" name="pic_desc_input" placeholder=" "> 
+                                </div>
+                                <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+            
+            <div class="row mb-2">
+                {% for img in all_images reversed %}
+                <div class="col-3 mb-2">                
+                    <p class="self-align-center m-1">{{img.title}}</p>
+                
+                    <img src="{{ media_url }}{{ img.img }}" alt="..." class="img-fluid">
+                </div>
+                {% endfor %}
+            </div>
+            
+
+        </div>
+    </div>
+</body>
+</html>
+
